@@ -4,13 +4,16 @@ import App from '../App';
 import CommentBox from '../CommentBox';
 import CommentList from '../CommentList';
 
-it('shows a comment box',()=>{
+let wrapped;
+beforeEach(()=>{
     const wrapped=shallow(<App/>);
+})
+
+it('shows a comment box',()=>{
     expect(wrapped.find(CommentBox).length).toEqual(1);
 });
 
 it('shows a comment List',()=>{
-    const wrapped=shallow(<App/>);
     expect(wrapped.find(CommentList).length).toEqual(1);
 });
 
