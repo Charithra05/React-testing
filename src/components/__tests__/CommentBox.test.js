@@ -1,11 +1,15 @@
 import React from 'react';
 import CommentBox from '../CommentBox';
 import {mount} from 'enzyme';
-import { unmountComponentAtNode } from 'react-dom';
+import Root from '../../Root';
 
 let wrapped;
 beforeEach(()=>{
-    wrapped=mount(<CommentBox/>);
+    wrapped=mount(
+        <Root>
+            <CommentBox/>
+        </Root>
+        );
 });
 
 it('has a text area and a button',()=>{
@@ -23,19 +27,21 @@ describe('the text area',()=>{
         });
         wrapped.update();
     });
+    it('has a text area that users can type',()=>{
+        expect(wrapped.find('textarea').prop('value')).toEqual('new comment');
+    });
+    
+    it('when form is submitted text area gets emptied',()=>{
+        wrapped.find('form').prop('submit');
+        wrapped.update();
+        expect(wrapped.find('textarea').prop('value')).toEqual('');
+    })
 })
 
-it('has a text area that users can type',()=>{
-    expect(wrapped.find('textarea').prop('value')).toEqual('new comment');
-});
 
-it('when form is submitted text area gets emptied',()=>{
-    wrapped.find('form').prop('submit')
-    wrapped.update();
-    expect(wrapped.find('textarea').prop('value')).toEqual('');
-})
 afterEach(()=>{
     wrapped.unmount();
 
 })
 //Find not only finds the instances but also the HTML elements
+
